@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "spring.properties.hibernate.dialect",
+      "type": "java.lang.String",
+      "description": "Description for spring.properties.hibernate.dialect."
+  }
+] }

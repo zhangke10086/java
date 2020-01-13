@@ -1,0 +1,79 @@
+server:
+  port: 8080
+
+
+spring:
+  datasource:
+      url: jdbc:log4jdbc:mysql://47.93.242.169:3306/zk?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Asia/Shanghai
+      driver-class-name: net.sf.log4jdbc.DriverSpy
+      username: root
+      password: aaaaaa
+
+#      url: jdbc:log4jdbc:mysql://zhangke-bysj.mysql.rds.aliyuncs.com:3306/zk?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+#      driver-class-name: net.sf.log4jdbc.DriverSpy
+#      username: root
+#      password: ABCabc123!
+#        url: jdbc:log4jdbc:mysql://localhost:3306/zk?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Asia/Shanghai
+#        driver-class-name: net.sf.log4jdbc.DriverSpy
+#        username: root
+#        password: root
+
+
+
+
+
+
+  main:
+    allow-bean-definition-overriding: true
+
+  #      driver-class-name: oracle.jdbc.OracleDriver
+  #      url: jdbc:oracle:thin:@10.24.19.221:1521:orcl
+  #      username: lcmes9999
+  #      password: aaaaaa
+
+
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 0
+      #单个数据的大小
+      max-file-size: 500MB
+      #总数据的大小
+      max-request-size: 1000MB
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    open-in-view: true
+#    properties:
+#      hibernate:
+#        enable_lazy_load_no_trans : true
+#        dialect: com.example.common.config.Utf8
+
+
+
+
+  jackson:
+    time-zone: GMT+8
+
+#  properties:
+#    hibernate:
+#      enable_lazy_load_no_trans : true
+#      dialect: com.example.common.config.Utf8
+  #  security:
+  #    enabled: true
+  #    path: /swagger-ui.html
+  #    user:
+  #      name: user
+  #      password: 123
+
+# slf4j日志配置
+logging:
+  # 配置级别
+  level:
+    # 对所有用到的程序文件都开启日志打印
+    root: info
+    # 按照包的层级来开启日志级别
+  # 日志具体的配置详情
+  config: classpath:config/logback-spring.xml
