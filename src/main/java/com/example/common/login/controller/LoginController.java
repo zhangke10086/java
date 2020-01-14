@@ -58,6 +58,21 @@ public class LoginController {
         CommonResult result =new CommonResult();
         try {
             userService.updateUserInfo(user);
+            result.setData(userService.findByid(user.getId()));
+            log.info("更新用户信息成功！{}",user);
+            return result;
+        }catch (Exception e){
+            result.setState(500);
+            return result;
+        }
+    }
+    @PostMapping(value = "/getUserInfo")
+    @ApiOperation("获得用户信息")
+    @CrossOrigin
+    public CommonResult getUserInfo(@RequestBody String id){
+        CommonResult result =new CommonResult();
+        try {
+            User user = userService.findByid(id);
             result.setData(user);
             log.info("更新用户信息成功！{}",user);
             return result;

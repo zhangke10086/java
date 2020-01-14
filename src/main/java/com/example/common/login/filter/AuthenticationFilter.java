@@ -1,5 +1,6 @@
 package com.example.common.login.filter;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.example.common.login.entity.LoginUser;
 import com.example.common.login.entity.Role;
@@ -8,6 +9,7 @@ import com.example.common.login.entity.User;
 import com.example.common.login.service.TokenService;
 import com.example.common.resformat.JwtHelper;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.jsonwebtoken.ExpiredJwtException;
 import lombok.SneakyThrows;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,7 +47,7 @@ public class AuthenticationFilter extends BasicAuthenticationFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
-                                    FilterChain chain) throws ServletException, IOException {
+                                    FilterChain chain) throws ServletException, IOException,io.jsonwebtoken.ExpiredJwtException {
         ServletContext sc = request.getSession().getServletContext();
         // 获取 spring 容器
         AbstractApplicationContext cxt = (AbstractApplicationContext) WebApplicationContextUtils.getWebApplicationContext(sc);
@@ -86,7 +88,7 @@ public class AuthenticationFilter extends BasicAuthenticationFilter {
                                 new UsernamePasswordAuthenticationToken(loginUser,
                                         null, authorities));
                     }
-                } catch (Exception e) {
+                } catch (ExpiredJwtException e) {
                     log.info("当前token已失效！");
                     JSONObject j = new JSONObject();
                     j.put("state", "50001");
@@ -94,7 +96,9 @@ public class AuthenticationFilter extends BasicAuthenticationFilter {
                     response.setHeader("Access-Control-Allow-Credentials", "true");
                     response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Connection, User-Agent, Cookie");
                     response.getWriter().write(j.toString());
-
+                    return;
+                } catch (Exception e){
+                    log.error("错误",e);
                 }
             }
         }

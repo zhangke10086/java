@@ -24,4 +24,7 @@ public class UserService  {
     public void updateUserInfo(User user){
         userRepository.saveAndFlush(user);
     }
+    public User findByid(String id){
+        return userRepository.findById(id).get();
+    }
 }

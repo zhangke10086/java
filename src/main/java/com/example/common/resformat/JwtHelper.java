@@ -105,8 +105,8 @@ public class JwtHelper {
      */
     public static String createJWT(LoginUser User) {
         String subject = JwtHelper.generalSubject(User);
-        String accessToken = JwtHelper.createJWT(User.getUser().getId(), subject, 60 * 60 * 1000, secret);
-        return accessToken;
+        return JwtHelper.createJWT(User.getUser().getId(), subject, 60 * 60 * 1000, secret);
+
     }
     public static LoginUser getUserByToken(String token) {
         String subject = JwtHelper.parseJWT(token).getSubject();
